@@ -1,6 +1,5 @@
 <?php
-class Database
-{
+class Database {
     private $localhost = "localhost";
     private $username = "root";
     private $password = "";
@@ -27,8 +26,7 @@ class Database
     }
 
     // insert data
-    public function insert($table, $params = array())
-    {
+    public function insert($table, $params = array()) {
         if ($this->tableExist($table)) {
             $table_column = implode(', ', array_keys($params));
             $table_value = implode("', '", array_values($params));
@@ -47,8 +45,7 @@ class Database
     }
 
     // get data
-    public function select($table, $row = "*", $join = null, $where = null, $order = null, $limit = null)
-    {
+    public function select($table, $row = "*", $join = null, $where = null, $order = null, $limit = null) {
         if ($this->tableExist($table)) {
             $sql = "SELECT $row FROM $table";
             if ($join != null) {
@@ -76,8 +73,7 @@ class Database
     }
 
     // update data
-    public function update($table, $params = array(), $where = null)
-    {
+    public function update($table, $params = array(), $where = null) {
         if ($this->tableExist($table)) {
             $arg = array();
             foreach ($params as $key => $val) {
@@ -99,8 +95,7 @@ class Database
         }
     }
     // delete data
-    public function delete($table, $where = null)
-    {
+    public function delete($table, $where = null) {
         if ($this->tableExist($table)) {
             $sql = "DELETE FROM $table";
             if ($where != null) {
@@ -118,8 +113,7 @@ class Database
         }
     }
     // table exist
-    private function tableExist($table)
-    {
+    private function tableExist($table) {
         $sql = "SHOW TABLES FROM $this->database LIKE '{$table}'";
         $tableInDb = $this->mysqli->query($sql);
         if ($tableInDb) {
@@ -134,16 +128,14 @@ class Database
     }
 
     // get result
-    public function getResult()
-    {
+    public function getResult() {
         $val = $this->result;
         $this->result = array();
         return $val;
     }
 
     // close the connection
-    public function __destruct()
-    {
+    public function __destruct() {
         if ($this->conn) {
             if ($this->mysqli->close()) {
                 $this->conn = false;

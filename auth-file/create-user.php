@@ -25,7 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             'message' => 'Email already Exists',
         ]);
     }else{
-        $obj->insert('users', ['name' => $name, 'email' => $email, 'password' => $new_password, 'create_at' => date('Y-m-d')]);
+        $obj->insert('users', [
+            'name' => $name, 
+            'email' => $email, 
+            'password' => $new_password, 
+            'create_at' => date('Y-m-d')
+        ]);
         $data = $obj->getResult();
         if ($data[0] == 1) {
             echo json_encode([
