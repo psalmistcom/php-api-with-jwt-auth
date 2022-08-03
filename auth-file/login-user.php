@@ -12,9 +12,11 @@ $obj = new Database();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents("php://input", true));
-    $email = htmlentities($data->email);
-    $password = htmlentities($data->password);
+    // $email = htmlentities($data->email);
+    // $password = htmlentities($data->password);
 
+    $email =  $_POST['email'];
+    $password =  $_POST['password'];
     $obj->select('users', '*', null, "email='{$email}'", null, null);
     $datas = $obj->getResult();
     foreach ($datas as $data) {
@@ -38,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'email' => $email,
                 ],
             ];
-            $secret_key = "Hilal ahmad khan";
+            $secret_key = "HighQ Innovations";
             $jwt = JWT::encode($payload, $secret_key, 'HS256');
             echo json_encode([
                 'status' => 1,

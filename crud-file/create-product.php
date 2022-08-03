@@ -15,25 +15,36 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         $data = json_decode(file_get_contents("php://input"));
         $allheaders = getallheaders();
         $jwt = $allheaders['Authorization'];
-        $secret_key = "Hilal ahmad khan";
+        $secret_key = "HighQ Innovations";
         $user_data = JWT::decode($jwt, $secret_key, array('HS256'));
 
         $id = $user_data->data->id;
-        $title = $data->title;
-        $content = $data->content;
-        $price = $data->price;
+        // $title = $data->title;
+        // $content = $data->content;
+        // $price = $data->price;
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $price = $_POST['price'];
 
-        $obj->insert('products', ['title' => $title, 'user_id' => $id, 'content' => $content, 'price' => $price]);
-        $result = $obj->getResult();
-        if ($result[0] == 1) {
-            echo json_encode([
-                'status' => 1,
-                'message' => "Product Add Successfully",
-            ]);
-        } else {
+        if (!empty($title) && !empty($content) && !empty($price)) {
+            $obj->insert('products', ['title' => $title, 'user_id' => $id, 'content' => $content, 'price' => $price]);
+            $result = $obj->getResult();
+            if ($result[0] == 1) {
+                echo json_encode([
+                    'status' => 1,
+                    'message' => "Product Add Successfully",
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 0,
+                    'message' => "Server Problem",
+                ]);
+            }
+        }else {  
+            http_response_code(407);          
             echo json_encode([
                 'status' => 0,
-                'message' => "Server Problem",
+                'message' => "All fields are required",
             ]);
         }
     } catch (Exception $e) {

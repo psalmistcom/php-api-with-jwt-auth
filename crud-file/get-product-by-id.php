@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'GET') {
         $data = json_decode(file_get_contents("php://input"));
         $allheaders = getallheaders();
         $jwt = $allheaders['Authorization'];
-        $secret_key = "Hilal ahmad khan";
+        $secret_key = "HighQ Innovations";
         $user_data = JWT::decode($jwt, $secret_key, array('HS256'));
 
         $id = $user_data->data->id;

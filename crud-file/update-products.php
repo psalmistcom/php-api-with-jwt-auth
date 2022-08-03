@@ -8,17 +8,21 @@ $obj = new Database();
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     $data= json_decode(file_get_contents("php://input"));
-    $id=$data->id;
-    $title=$data->title;
-    $content=$data->content;
-    $price=$data->price;
+    // $id=$data->id;
+    // $title=$data->title;
+    // $content=$data->content;
+    // $price=$data->price;
+    $id = $_POST['id'];
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $price = $_POST['price'];
 
     $obj->update('products', ['title'=>$title,'content'=>$content,'price'=>$price],"id='{$id}'");
     $result=$obj->getResult();
     if ($result[0] == 1) {
         echo json_encode([
             'status' => 1,
-            'message' => "Product Add Successfully",
+            'message' => "Product Updated Successfully",
         ]);
     } else {
         echo json_encode([
