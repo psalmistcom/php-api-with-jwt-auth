@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'GET') {
         if ($products) {
             echo json_encode([
                 'status' => 1,
+                'User ID'=> $id,
                 'message' => $products,
             ]);
         } else {
